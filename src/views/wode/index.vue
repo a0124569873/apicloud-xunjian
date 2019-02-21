@@ -41,7 +41,7 @@
             </div>
         </van-nav-bar>
 
-        <!-- <div @click="paizhao">
+        <div @click="paizhao">
             <van-icon name="photograph" size="50px"></van-icon>
         </div>
         <div @click="paizhao1">
@@ -54,7 +54,15 @@
 
         <div id="pic"></div>
 
-        <input type="text" :value="imgpath" style="width:200px;"> -->
+        <input type="text" :value="imgpath" style="width:200px;">
+
+        <van-uploader :after-read="onRead">
+            <van-icon name="photograph" />
+        </van-uploader>
+
+        <van-button type="primary" @click="uupload">上传图片</van-button>
+
+        {{retstr}}
 
 
         
@@ -62,11 +70,17 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
 
     data(){
         return {
-            imgpath: 'static/mapIcon/SDFJ-1.gif'
+            imgpath: 'static/mapIcon/SDFJ-1.gif',
+            file: '',
+            retstr: ''
+
         }
     },
 
@@ -77,6 +91,30 @@ export default {
     },
 
     methods: {
+
+        onRead(file){
+            this.file = file.file
+
+            this.$dialog.alert({ message: JSON.stringify(file.file)})
+            
+        },
+
+        uupload(){
+            let aaxios = axios.create()
+            let formdata = new FormData()
+
+            formdata.append('imgfile', this.file, this.file.name);
+            
+            let config = {
+                // headers:{'Content-Type':'multipart/form-data'}
+            };
+            // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+
+
+            aaxios.post('http://47.105.40.29:19999/uploadimg', formdata, config).then(res => {
+                this.$dialog.alert({ message: JSON.stringify(res)})
+            })
+        },
 
         denglu(){
             this.$toast("sdfsdfsdfsdf")
@@ -115,11 +153,12 @@ export default {
                 quality: 'medium'
             }, function(ret){
 
-                _this.$toast(this.eventType)
+
+                _this.retstr += ret.eventType
 
                 if(ret.eventType == "takePhoto"){
-                    _this.imgpath = "fs:/" + ret.imagePath
-                    _this.$toast(this.imgpath)
+                    // _this.dialog.alert({ message: JSON.stringify(ret) })
+                    _this.retstr += JSON.stringify(ret)
                     FNPhotograph.close()
                 }
                 
