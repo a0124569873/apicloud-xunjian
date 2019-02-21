@@ -15,6 +15,7 @@ import guzhang from '@/views/guzhang'
 import gz_detail from '@/views/guzhang/gz_detail'
 
 import wode from '@/views/wode'
+import test from '@/views/wode/testpage.vue'
 
 import login from '@/views/login'
 import passwd from '@/views/login/alterpasswd'
@@ -93,6 +94,11 @@ export default new Router({
           path: 'zidong_detail',
           name: 'zidong_detail',
           component: zidong_detail,
+        },
+        {
+          path: 'test',
+          name: 'test',
+          component: test,
         },
       ]
     }

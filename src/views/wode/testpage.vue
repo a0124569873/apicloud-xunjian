@@ -1,0 +1,81 @@
+<template>
+    <div>
+        <van-checkbox-group v-model="result">
+            <van-checkbox
+                v-for="item in list"
+                :key="item"
+                :name="item"
+            >
+                复选框 {{ item }}
+            </van-checkbox>
+        </van-checkbox-group>
+    </div>
+</template>
+<script>
+export default {
+    data(){
+        return {
+            result: [],
+            list: [
+                '1',
+                '2',
+                '3'
+            ]    
+        }
+    },
+
+    methods: {
+
+        paizhao1(){
+            let _this = this;
+            api.getPicture({
+                sourceType: 'album',//library
+                encodingType: 'jpg',
+                mediaValue: 'pic',
+                destinationType: 'url',
+                allowEdit: false,
+                quality: 60,
+                targetWidth:640,
+                saveToPhotoAlbum: true
+            }, function(ret, err){ 
+                if (ret.data) {
+                    alert(JSON.stringify(ret))
+                    // alert(ret.data);
+                    _this.imgpath = ret.data
+                    // _this.$toast(ret.data)
+                    document.getElementById("pic").innerHTML="<img src=" + ret.data + "/>"
+                            
+                }
+            });
+        },
+
+        paizhao(){
+            let _this = this;
+            var FNPhotograph = api.require('FNPhotograph');
+            FNPhotograph.open({
+                path: 'fs://savePath',
+                album: true ,
+                quality: 'medium'
+            }, function(ret){
+
+
+                _this.retstr += ret.eventType
+
+                if(ret.eventType == "takePhoto"){
+                    // _this.dialog.alert({ message: JSON.stringify(ret) })
+                    _this.retstr += JSON.stringify(ret)
+                    FNPhotograph.close()
+                }
+                
+            });
+        },
+        
+    }
+}
+</script>
+<style lang="scss" scoped>
+.van-checkbox{
+    font-size: 20px;
+    margin: 20px;
+}
+</style>

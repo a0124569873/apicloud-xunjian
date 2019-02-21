@@ -6,11 +6,11 @@
                 <div class="title">
                     现场图片:
                 </div>
-                <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%">
-                    <img v-for="item in files" :src="item.content" alt="" style="width: 100px; height: 100px;margin: 0px 5px;">
-                    <van-icon name="delete" size="50px" @click="delall"/>
+                <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%;margin: 5px;">
+                    <img v-for="item in files" :src="item.content" alt="" style="width: 100px; height: 100px;margin: 5px;">
+                    <van-icon name="delete" size="50px" @click="delall" color="#409EFF"/>
                     <van-uploader :after-read="onRead">
-                        <van-icon name="plus" size="50px"/>
+                        <van-icon name="plus" size="50px" color="#409EFF"/>
                     </van-uploader>
                     <van-button
                         :loading="loading"
@@ -20,15 +20,16 @@
                         @click="uupload"
                         type="primary"
                     >
-                        上传
+                        测试上传
                     </van-button>
                 </div>
 
             </van-col>
         </van-row>
-        <van-row class="showdong_add_item1">
+
+        <van-row class="showdong_add_ite" style="background-color: white;margin: 5px;">
             <van-col span="24">
-                <div class="title">
+                <div class="title" style="font-size: 20px;margin: 5px;">
                     问题描述:
                 </div>
                 <van-checkbox-group v-model="questionres">
@@ -36,6 +37,7 @@
                         v-for="item in questions"
                         :key="item.code"
                         :name="item.code"
+                        style="margin: 10px;"
                     >
                         {{item.name}}
                     </van-checkbox>
@@ -155,18 +157,26 @@ export default {
 .showdong_add_item1{
 
     background-color: white;
+    margin: 5px;
 
     .title{
         margin: 5px;
-    }
-
-    .van-col{
         font-size: 20px;
     }
 
+    .van-col{
+    }
+
     .van-checkbox{
-        padding: 5px;
+
+        // background-color: red;
+
+        // padding: 5px;
+        margin: 10px;
         font-size: 16px;
+        .van-icon{
+            margin: 0px;
+        }
     }
 
     .van-icon{
@@ -175,9 +185,4 @@ export default {
 
 }
 
-.showdong_add_item{
-    padding: 20px;
-    background-color: white;
-    margin: 5px;
-}
 </style>

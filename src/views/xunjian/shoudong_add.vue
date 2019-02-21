@@ -90,8 +90,9 @@ export default {
     methods: {
 
         submit(){
-            console.log(this.$refs.sss);
-            
+            // console.log(JSON.stringify(this.$refs.addcom));
+            console.log(JSON.stringify(this.$refs.addcom.loading));
+            this.$toast(JSON.stringify(this.$refs.addcom.questions))
         },
 
         delall(){
@@ -191,32 +192,10 @@ export default {
 
 <style lang="scss" scoped>
 
-.showdong_add_item1{
-
-    background-color: white;
-
-    .title{
-        margin: 5px;
-    }
-
-    .van-col{
-        font-size: 20px;
-    }
-
-    .van-checkbox{
-        padding: 5px;
-        font-size: 16px;
-    }
-
-    .van-icon{
-        margin: 20px;
-    }
-
-}
-
 .showdong_add_item{
     padding: 20px;
     background-color: white;
     margin: 5px;
 }
+
 </style>

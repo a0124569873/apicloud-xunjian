@@ -26,42 +26,7 @@
             </van-col>
         </van-row>
         
-        <van-row class="showdong_add_item1">
-            <van-col span="24">
-                <div class="title">
-                    现场图片:
-                </div>
-
-                <van-icon name="photo" size="40px" v-for="item in photos" @click="showlink(item)"></van-icon>
-                <van-icon name="photograph" size="40px" @click="paizhao"></van-icon>
-            </van-col>
-        </van-row>
-        <van-row class="showdong_add_item1">
-            <van-col span="24">
-                <div class="title">
-                    问题描述:
-                </div>
-                <van-checkbox-group v-model="questionres">
-                    <van-checkbox
-                        v-for="item in questions"
-                        :key="item.code"
-                        :name="item.code"
-                    >
-                        {{item.name}}
-                    </van-checkbox>
-                </van-checkbox-group>
-            </van-col>
-        </van-row>
-        <van-row class="showdong_add_item1">
-            <van-col span="24">
-                <div class="title">
-                    备注:
-                </div>
-                <van-cell-group>
-                    <van-field type="textarea" rows="10" v-model="inputval" placeholder="请输入描述" />
-                </van-cell-group>
-            </van-col>
-        </van-row>
+        <addcom />
 
         <van-row class="showdong_add_item">
             <van-col span="24" style="text-align: center;">
@@ -75,7 +40,15 @@
 </template>
 
 <script>
+
+import addcom from './addcomponent'
+
 export default {
+
+    components: {
+        addcom
+    },
+
     data(){
         return {
             show: false,
@@ -161,34 +134,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .showdong_add_item{
     padding: 10px;
     background-color: white;
     margin: 0px;
     text-align: center;
-}
-
-.showdong_add_item1{
-
-    background-color: white;
-
-    .title{
-        margin: 5px;
-    }
-
-    .van-col{
-        font-size: 20px;
-    }
-
-    .van-checkbox{
-        padding: 5px;
-        font-size: 16px;
-    }
-
-    .van-icon{
-        margin: 20px;
-    }
-
 }
 
 </style>

@@ -28,51 +28,50 @@
                     </van-col>
                 </van-row>
             </div>
-            <div class="card">
-                <van-row class="detail_row" type="flex" justify="center">
-                    <van-col>
-                        故障时间
-                    </van-col>
-                    <van-col>
-                        2019-2-19 20:20:20
-                    </van-col>
-                </van-row>
-                <van-row class="detail_row" type="flex" justify="center">
-                    <van-col>
-                        故障现象
-                    </van-col>
-                    <van-col>
-                        故障现象1<br/>
-                        故障现象2
+            <div class="">
+
+                <van-row class="showdong_add_item1">
+                    <van-col span="24">
+                        <div class="title">
+                            现场图片:
+                        </div>
+                        <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%;margin: 5px;">
+                            <img v-for="item in images" :src="item.src" alt="" style="width: 200px; height: 155px;margin: 5px;">
+                        </div>
+
                     </van-col>
                 </van-row>
-                <van-row class="detail_row" type="flex" justify="center">
-                    <van-col>
-                        状&nbsp;&nbsp;态
-                    </van-col>
-                    <van-col>
-                        未处理
+
+                <van-row class="showdong_add_item1">
+                    <van-col span="24">
+                        <div class="title">
+                            问题描述:
+                        </div>
+                        <div style="display: flex;align-items: center;flex-dirction: column; width: 100%;margin: 5px;">
+                            <van-tag v-for="item in questionsres" style="margin: 20px;">{{item.name}}</van-tag><br/>
+                        </div>
                     </van-col>
                 </van-row>
+
+                <van-row class="showdong_add_item1">
+                    <van-col span="24">
+                        <div class="title">
+                            备注:
+                        </div>
+                        <div style="margin: 10px;">
+                            {{beizhu}}
+                        </div>
+                    </van-col>
+                </van-row>
+                
             </div>
             <div class="card">
-                <van-row class="detail_row" type="flex" justify="center">
-                    <van-col>
-                        历史故障记录
-                    </van-col>
-                </van-row>
-                <van-row class="detailrow" v-for="item in [1, 2, 3]" type="flex" justify="center">
-                    <van-col span="12">
-                        2019-2-20 20:20:20
-                    </van-col>
-                    <van-col span="12">
-                        故障现象1<br/>
-                        故障现象2
-                    </van-col>
-                </van-row>
+                
             </div>
 
         </div>
+
+        <bottom-bar></bottom-bar>
 
         
 
@@ -85,9 +84,25 @@ export default {
 
     data(){
         return {
+
+            beizhu: "测试备注",
+
+            questionsres: [
+                {name: '外观有破损', code: '001'},
+                {name: '外观不好看', code: '002'},
+                {name: '噪音太大', code: '003'},
+            ],
+
             itemData: {
 
-            }
+            },
+
+            images: [
+                {src: 'static/jietu/photo-suidao-fengji.png'},
+                {src: 'static/jietu/photo-suidao-fengji.png'},
+                {src: 'static/jietu/photo-suidao-fengji.png'},
+                {src: 'static/jietu/photo-suidao-fengji.png'},
+            ]
         }
     },
 
@@ -104,6 +119,32 @@ export default {
 </script>
 
 <style lang="scss" scope>
+
+.showdong_add_item1{
+
+    background-color: white;
+    margin: 5px;
+
+    .title{
+        margin: 5px;
+        font-size: 20px;
+    }
+
+    .van-col{
+        // font-size: 20px;
+    }
+
+    .van-checkbox{
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    .van-icon{
+        margin: 20px;
+    }
+
+}
+
 .card{
     margin: 5px 0px;
     background-color: white;
