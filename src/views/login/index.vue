@@ -9,7 +9,7 @@
         <van-row type="flex" justify="center">
             <van-col span="16">
                 <van-field
-                    v-model="username"
+                    v-model="formdata.username"
                     required
                     clearable
                     label="用户名"
@@ -22,7 +22,7 @@
         <van-row type="flex" justify="center">
             <van-col span="16">
                 <van-field
-                    v-model="password"
+                    v-model="formdata.password"
                     type="password"
                     label="密码"
                     placeholder="请输入密码"
@@ -39,7 +39,14 @@
 </template>
 <script>
 export default {
-    
+    data(){
+        return {
+            formdata: {
+                username: '',
+                password: ''
+            }
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

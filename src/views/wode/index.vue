@@ -95,22 +95,20 @@ export default {
         onRead(file){
             this.file = file.file
 
-            this.$dialog.alert({ message: JSON.stringify(file.file)})
+            // this.$dialog.alert({ message: JSON.stringify(file)})
+            console.log(file);
+            
             
         },
 
         uupload(){
             let aaxios = axios.create()
             let formdata = new FormData()
-
             formdata.append('imgfile', this.file, this.file.name);
-            
             let config = {
                 // headers:{'Content-Type':'multipart/form-data'}
             };
             // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-
-
             aaxios.post('http://47.105.40.29:19999/uploadimg', formdata, config).then(res => {
                 this.$dialog.alert({ message: JSON.stringify(res)})
             })
@@ -136,9 +134,10 @@ export default {
                 saveToPhotoAlbum: true
             }, function(ret, err){ 
                 if (ret.data) {
-                    alert(ret.data);
+                    alert(JSON.stringify(ret))
+                    // alert(ret.data);
                     _this.imgpath = ret.data
-                    _this.$toast(ret.data)
+                    // _this.$toast(ret.data)
                     document.getElementById("pic").innerHTML="<img src=" + ret.data + "/>"
                             
                 }

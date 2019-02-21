@@ -10,19 +10,19 @@
                 <van-row justify="center" type="flex" class="xunjiancard">
                     <van-col span="8" style="text-align: center;">
                         <div @click="openscan">
-                            <van-icon name="scan" size="50px"></van-icon><br/>
+                            <van-icon name="scan" size="50px" color="#67C23A"></van-icon><br/>
                             扫一扫
                         </div>
                     </van-col>
                     <van-col span="8" style="text-align: center;">
                         <div @click="find">
-                            <van-icon name="search" size="50px"></van-icon><br/>
+                            <van-icon name="search" size="50px" color="#F56C6C"></van-icon><br/>
                             查找设备
                         </div>
                     </van-col>
                     <van-col span="8" style="text-align: center;">
                         <div @click="$router.push('shoudong_list')">
-                            <van-icon name="notes-o" size="50px"></van-icon><br/>
+                            <van-icon name="notes-o" size="50px" color="#E6A23C"></van-icon><br/>
                             手动巡检记录
                         </div>
                     </van-col>
@@ -35,7 +35,7 @@
                 <van-row justify="center" type="flex" class="xunjiancard">
                     <van-col span="8" style="text-align: center;">
                         <div @click="$router.push('zidong_list')">
-                            <van-icon name="sign" size="50px"></van-icon><br/>
+                            <van-icon name="sign" size="50px" color="#409EFF"></van-icon><br/>
                             自动巡检报告
                         </div>
                     </van-col>

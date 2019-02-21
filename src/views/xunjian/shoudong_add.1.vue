@@ -22,13 +22,63 @@
             </van-col>
         </van-row>
 
-        <!-- 添加组件 -->
+        <van-row class="showdong_add_item1">
+            <van-col span="24">
+                <div class="title">
+                    现场图片:
+                </div>
+                <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%">
+                    <img v-for="item in files" :src="item.content" alt="" style="width: 100px; height: 100px;margin: 0px 5px;">
+                    <van-icon name="delete" size="50px" @click="delall"/>
+                    <van-uploader :after-read="onRead">
+                        <van-icon name="plus" size="50px"/>
+                    </van-uploader>
+                    <van-button
+                        :loading="loading"
+                        loading-text="上传中.."
+                        style="width: 200px;"
+                        size="normal"
+                        @click="uupload"
+                        type="primary"
+                    >
+                        上传
+                    </van-button>
+                </div>
 
-        <addcom ref="addcom"/>
+            </van-col>
+        </van-row>
+        <van-row class="showdong_add_item1">
+            <van-col span="24">
+                <div class="title">
+                    问题描述:
+                </div>
+                <van-checkbox-group v-model="questionres">
+                    <van-checkbox
+                        v-for="item in questions"
+                        :key="item.code"
+                        :name="item.code"
+                    >
+                        {{item.name}}
+                    </van-checkbox>
+                </van-checkbox-group>
+            </van-col>
+        </van-row>
+
+        <van-row class="showdong_add_item1">
+            <van-col span="24">
+                <div class="title">
+                    备注:
+                </div>
+                <van-cell-group>
+                    <van-field type="textarea" rows="10" v-model="inputval" placeholder="请输入描述" />
+                </van-cell-group>
+            </van-col>
+            
+        </van-row>
 
         <van-row class="showdong_add_item">
             <van-col span="24" style="text-align: center;">
-                <van-button type="primary" size="large" @click="submit">上报</van-button>
+                <van-button type="primary" size="large">上报</van-button>
             </van-col>
             
         </van-row>
@@ -53,13 +103,8 @@
 
 import axios from 'axios'
 import 'es6-promise-always'
-import addcom from './addcomponent.vue'
 
 export default {
-
-    components: {
-        addcom
-    },
 
     mounted(){
         this.questions = [
@@ -88,11 +133,6 @@ export default {
     },
 
     methods: {
-
-        submit(){
-            console.log(this.$refs.sss);
-            
-        },
 
         delall(){
             this.files = []
