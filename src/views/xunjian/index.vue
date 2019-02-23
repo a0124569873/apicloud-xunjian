@@ -50,6 +50,12 @@
                 </van-row>
             </div>
 
+            <van-button @click="test" type="primary" style="margin-top: 50px;" size="large">
+                测试按钮
+            </van-button>
+
+            <bottom-bar></bottom-bar>
+
             
         </div>
         
@@ -66,21 +72,6 @@ export default {
     data(){
         return {
 
-            currentPage: 1,
-
-            suidaolist: [
-                
-            ],
-
-            zhongleilist: [
-
-            ],
-
-            devicelist: [
-
-            ],
-
-            listtype: "suidao"
         }  
     },
 
@@ -89,6 +80,10 @@ export default {
     },
 
     methods: {
+
+        test(){
+            this.$dialog.alert({message: "sdfgsdfsdf"})
+        },
 
         find(){
             this.$router.push("add_record?type=shoudong")

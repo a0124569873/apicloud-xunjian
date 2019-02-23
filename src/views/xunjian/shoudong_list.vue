@@ -31,6 +31,8 @@
 
 import deviceitem from './shoudong_list_item'
 import * as data from '../data'
+import xunjianService from '../../services/xunjianService'
+
 
 export default {
 
@@ -42,12 +44,6 @@ export default {
         return {
             // shangbao: true,
             active: 0,
-            guzhanglist: [
-                {cdoe: 0},
-                {cdoe: 0},
-                {cdoe: 0},
-                {cdoe: 0},
-            ],
             // suidaoitem: {
             //     name: "隧道1", code: "suidao1"
             // },
@@ -56,7 +52,8 @@ export default {
             type: [],
             typeactive: [],
             shebei: [],
-            shebeiactive: []
+            shebeiactive: [],
+            recordlist: {},
 
         }
     },
@@ -69,10 +66,17 @@ export default {
     },
 
     mounted (){
-        this.suidao = data.suidao('aaa')
-        this.type = data.type()
-        this.type.map(item => {
-            this.shebei[item.code] = data.jilu(item.code)
+        let _this = this
+        xunjianService.getAllTunnel().then(res => {
+            _this.suidao = []
+            res.map(item => {
+                _this.suidao.push({name: item.name, code: item.code})
+                xunjianService.getXunjianList().then(res => {
+                    res.dataList.map(recorditem => {
+
+                    })
+                })
+            })
         })
     },
 

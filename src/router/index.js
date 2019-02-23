@@ -5,7 +5,6 @@ import main from '@/views/main'
 
 import xunjian from '@/views/xunjian'
 import add_record from '@/views/xunjian/add_record'
-import shoudong_add from '@/views/xunjian/shoudong_add'
 import shoudong_list from '@/views/xunjian/shoudong_list'
 import shoudong_detail from '@/views/xunjian/shoudong_detail'
 import zidong_list from '@/views/xunjian/zidong_list'
@@ -69,11 +68,6 @@ export default new Router({
           path: 'gz_detail',
           name: 'gz_detail',
           component: gz_detail,
-        },
-        {
-          path: 'shoudong_add',
-          name: 'shoudong_add',
-          component: shoudong_add,
         },
         {
           path: 'shoudong_list',

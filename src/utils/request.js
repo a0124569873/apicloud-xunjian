@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { Toast } from 'vant'
+import * as config from '../views/config'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: 'http://10.168.5.210:8880/hjzk/', // api的base_url
+  baseURL: config.apibaseurl, // api的base_url
   timeout: 15000 // 请求超时时间
 })
 service.interceptors.request.use(config => {
