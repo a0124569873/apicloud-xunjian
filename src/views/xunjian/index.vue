@@ -91,25 +91,26 @@ export default {
     methods: {
 
         find(){
-            this.$router.push("shoudong_add")
+            this.$router.push("add_record?type=shoudong")
         },
 
         openscan(){
             let _this = this
             // _this.$router.push(`saoma_add?deviceid=aaa`)
-            let deviceid = ""
+            // let deviceid = ""
 
-            var FNScanner = api.require('FNScanner');
-            FNScanner.open({
-                autorotation: true
-            }, function(ret, err) {
-                if (ret && ret.eventType == 'success') {
-                    deviceid = JSON.parse(ret.content).code
-                    _this.$router.push(`saoma_add?deviceid=${deviceid}`)
-                } else {
-                    _this.$toast(JSON.stringify(err))
-                }
-            });
+            // var FNScanner = api.require('FNScanner');
+            // FNScanner.open({
+            //     autorotation: true
+            // }, function(ret, err) {
+            //     if (ret && ret.eventType == 'success') {
+                    // let info = ret.content
+                    let info = '{"categoryCode": "COVIJCQ","categoryName": "CO/VI检测器","code": "001001YCKCOVI","name": "CO/VI检测器YCKCOVI","sectionCode": "CU4933Y","sectionName": "西簧隧道"}'
+                    _this.$router.push(`add_record?info=${info}&type=saoma`)
+            //     } else {
+            //         _this.$toast(JSON.stringify(err))
+            //     }
+            // });
         },
 
     }

@@ -55,6 +55,8 @@ import axios from 'axios'
 import 'es6-promise-always'
 import addcom from './addcomponent.vue'
 
+import xunjianService from '../../services/xunjianService'
+
 export default {
 
     components: {

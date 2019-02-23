@@ -8,6 +8,9 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant)
 
+import axios from 'axios'
+Vue.prototype.$http = axios
+
 // import MuseUI from 'muse-ui';
 // import 'muse-ui/dist/muse-ui.css';
 // Vue.use(MuseUI);

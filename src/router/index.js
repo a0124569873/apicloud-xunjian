@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import main from '@/views/main'
 
 import xunjian from '@/views/xunjian'
-import saoma_add from '@/views/xunjian/saoma_add'
+import add_record from '@/views/xunjian/add_record'
 import shoudong_add from '@/views/xunjian/shoudong_add'
 import shoudong_list from '@/views/xunjian/shoudong_list'
 import shoudong_detail from '@/views/xunjian/shoudong_detail'
@@ -61,9 +61,9 @@ export default new Router({
           component: xunjian,
         },
         {
-          path: 'saoma_add',
-          name: 'saoma_add',
-          component: saoma_add,
+          path: 'add_record',
+          name: 'add_record',
+          component: add_record,
         },
         {
           path: 'gz_detail',
