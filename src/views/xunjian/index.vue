@@ -7,25 +7,47 @@
                 <div slot="left">手动巡检</div>
             </van-nav-bar>
             <div>
-                <van-row justify="center" type="flex" class="xunjiancard">
-                    <van-col span="8" style="text-align: center;">
-                        <div @click="openscan">
-                            <van-icon name="scan" size="50px" color="#67C23A"></van-icon><br/>
-                            扫一扫
-                        </div>
-                    </van-col>
-                    <van-col span="8" style="text-align: center;">
-                        <div @click="find">
-                            <van-icon name="search" size="50px" color="#F56C6C"></van-icon><br/>
-                            查找设备
-                        </div>
-                    </van-col>
-                    <van-col span="8" style="text-align: center;">
-                        <div @click="$router.push('shoudong_list')">
-                            <van-icon name="notes-o" size="50px" color="#E6A23C"></van-icon><br/>
-                            手动巡检记录
-                        </div>
-                    </van-col>
+                <van-row>
+                    <van-row justify="center" type="flex" class="xunjiancardsd">
+                        <van-col span="8" style="text-align: center;">
+                            <div @click="openscan">
+                                <van-icon name="scan" size="50px" color="#67C23A"></van-icon><br/>
+                                扫一扫
+                            </div>
+                        </van-col>
+                        <van-col span="8" style="text-align: center;">
+                            <div @click="find">
+                                <van-icon name="search" size="50px" color="#F56C6C"></van-icon><br/>
+                                查找设备
+                            </div>
+                        </van-col>
+                        <van-col span="8" style="text-align: center;">
+                            <div @click="$router.push('shoudong_list')">
+                                <van-icon name="notes-o" size="50px" color="#E6A23C"></van-icon><br/>
+                                手动巡检记录
+                            </div>
+                        </van-col>
+                    </van-row>
+                    <van-row justify="center" type="flex" class="xunjiancardsd1">
+                        <van-col span="8" style="text-align: center;">
+                            <div @click="$router.push('local_record')">
+                                <van-icon name="clock" size="50px" color="#67C23A"></van-icon><br/>
+                                本地记录
+                            </div>
+                        </van-col>
+                        <van-col span="8" style="text-align: center;">
+                            <!-- <div @click="find">
+                                <van-icon name="search" size="50px" color="#F56C6C"></van-icon><br/>
+                                查找设备
+                            </div> -->
+                        </van-col>
+                        <van-col span="8" style="text-align: center;">
+                            <!-- <div @click="$router.push('shoudong_list')">
+                                <van-icon name="notes-o" size="50px" color="#E6A23C"></van-icon><br/>
+                                手动巡检记录
+                            </div> -->
+                        </van-col>
+                    </van-row>
                 </van-row>
             </div>
             <van-nav-bar title="" class="xunjiantabbar">
@@ -82,7 +104,16 @@ export default {
     methods: {
 
         test(){
-            this.$dialog.alert({message: "sdfgsdfsdf"})
+            
+            let timestamp = new Date().getTime()
+            let newDate = new Date()
+            newDate.setTime(timestamp)
+            let res =  newDate.toLocaleString()
+
+            console.log(res);
+            
+            
+
         },
 
         find(){
@@ -126,6 +157,18 @@ export default {
 
 .xunjiancard{
     margin: 5px;
+    background-color: white;
+    padding: 10px;
+}
+
+.xunjiancardsd{
+    margin: 5px 0px 0px 0px;
+    background-color: white;
+    padding: 10px;
+}
+
+.xunjiancardsd1{
+    margin: 0px 0px 5px 0px;
     background-color: white;
     padding: 10px;
 }

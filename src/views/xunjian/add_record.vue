@@ -6,13 +6,13 @@
 
         <saomaaddtitle :imgsrc.sync="imgsrc" :devicename.sync='devicename' :suidao.sync="suidao" :devicetype.sync="devicetype" v-if="type=='saoma'" />
 
-        <shoudongaddtitle v-if="type == 'shoudong'" ref="shoudongcom"/>
+        <shoudongaddtitle v-if="type == 'shoudong'" ref="shoudongcom" :typecode.sync="typecode" :suidaocode.sync="suidaocode"/>
         
         <addcom ref="addcom" :questions.sync="questions"/>
 
         <van-row class="showdong_add_item">
             <van-col span="24" style="text-align: center;">
-                <van-button type="primary" style="width: 200px;" @click="upload">上报</van-button>
+                <van-button type="primary" style="width: 200px;" @click="upload">提交本次记录</van-button>
                 <van-button type="primary" style="width: 200px;" @click="test">上报</van-button>
             </van-col>
         </van-row>
@@ -47,15 +47,23 @@ export default {
             type: '',
             shebei: '',
             inputval: "",
-            questions: [],
+            questions: ['请选择设备类型'],
             questionres: [],
             code: '',
             photos: [],
             imgsrc: '',
             devicename: '',
             devicetype: '',
+            typecode: '',
+            suidaocode: '',
 
         }
+    },
+
+    watch: {
+       typecode(n, o){
+           this.questions = type.typecode[n].split(",")
+       } 
     },
 
     mounted(){
@@ -69,6 +77,7 @@ export default {
             this.devicename = json_info.name
             this.code = json_info.code
             this.suidao = json_info.sectionName
+            this.suidaocode = json_info.sectionCode
             this.devicetype = json_info.categoryName
             this.questions = type.typecode[json_info.categoryCode].split(",")
         }
@@ -78,17 +87,21 @@ export default {
 
     methods: {
 
+        updatetypecode(typecode){
+            this.questions = type.typecode[typecode].split(",")
+        },
+
         test(){
-            console.log(this.$refs.shoudongcom.code);
+            console.log(this.typecode);
             
         },
 
         upload(){
-
             let _this = this
 
             if (this.type == 'shoudong') {
                 this.code = this.$refs.shoudongcom.code
+                this.devicename = this.$refs.shoudongcom.shebei
             }
 
             if(this.code == ''){
@@ -96,35 +109,50 @@ export default {
                 return
             }
 
+            if(this.suidaocode == ''){
+                this.$toast("请选择隧道")
+                return
+            }
+
             if (this.$refs.addcom.filess.length != 0 || this.$refs.addcom.questionres.length != 0 || this.$refs.addcom.inputval != ''){
 
                 let problem = this.$refs.addcom.questionres.join(",") + "|" + this.$refs.addcom.inputval
-                let imgs_arr = []
+                let imgsurl_arr = []
+                let img_arr = []
+
                 Object.keys(this.$refs.addcom.files).map(item => {
                     this.$refs.addcom.files[item].finimgurl = _this.code + "-" + new Date().getTime() +  "-" + this.$RN(0, 9999) +  "-" + this.$refs.addcom.files[item].file.file.name
-                    imgs_arr.push(this.$refs.addcom.files[item].finimgurl)
+                    img_arr.push({'file-name': this.$refs.addcom.files[item].finimgurl, 'file-size': this.$refs.addcom.files[item].file.file.size, 'file-content': this.$refs.addcom.files[item].file.content})
+                    imgsurl_arr.push(this.$refs.addcom.files[item].finimgurl)
                 }) 
+                let imgs = imgsurl_arr.join(",")
 
-                let imgs = imgs_arr.join(",")
-    
-                let params = {}
-                params.equipCode = this.code
-                params.serverity = '1'
-                params.symptom = problem
-                params.timestamp = new Date().getTime()
-                params.solutionCode = '1'
-                params.imageUrl = imgs
-    
-                xunjianService.addXunjianRecordItem(params).then(res => {
-                    if(res == true){
-                        this.$toast("上传记录结束，开始上传图片")
-                        this.$refs.addcom.uploadimgs()
-                    }
+                let xunjianrecord = localStorage.getItem("xunjianrecord")
+                if(xunjianrecord == null){
+                    xunjianrecord = '{}'
+                }
+
+                let xjr_json = JSON.parse(xunjianrecord)
+
+                if(xjr_json[this.suidaocode] == undefined){
+                    xjr_json[this.suidaocode] = []
+                }
+
+                xjr_json[this.suidaocode].push({
+                    devicename: this.devicename,
+                    equipCode: this.code,
+                    symptom: problem,
+                    imageUrl: imgs,
+                    imgs: img_arr
                 })
+
+                let dst_str = JSON.stringify(xjr_json)
+                localStorage.setItem('xunjianrecord', dst_str)
+                this.$toast("提交成功")
+
             }else{
                 this.$toast("请输入问题描述")
             }
-
         },
 
         onClickLeft(){

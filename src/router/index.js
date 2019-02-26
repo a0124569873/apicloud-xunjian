@@ -9,6 +9,9 @@ import shoudong_list from '@/views/xunjian/shoudong_list'
 import shoudong_detail from '@/views/xunjian/shoudong_detail'
 import zidong_list from '@/views/xunjian/zidong_list'
 import zidong_detail from '@/views/xunjian/zidong_detail'
+import local_record from '@/views/xunjian/local_record'
+import shoudong_record_list_item_detail from '@/views/xunjian/shoudong_record_list_item_detail'
+import shoudong_record_list_items_list from '@/views/xunjian/shoudong_record_list_items_list'
 
 import guzhang from '@/views/guzhang'
 import gz_detail from '@/views/guzhang/gz_detail'
@@ -88,6 +91,21 @@ export default new Router({
           path: 'zidong_detail',
           name: 'zidong_detail',
           component: zidong_detail,
+        },
+        {
+          path: 'local_record',
+          name: 'local_record',
+          component: local_record,
+        },
+        {
+          path: 'shoudong_record_list_item_detail',
+          name: 'shoudong_record_list_item_detail',
+          component: shoudong_record_list_item_detail,
+        },
+        {
+          path: 'shoudong_record_list_items_list',
+          name: 'shoudong_record_list_items_list',
+          component: shoudong_record_list_items_list,
         },
         {
           path: 'test',

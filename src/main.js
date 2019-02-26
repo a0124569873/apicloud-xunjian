@@ -50,6 +50,25 @@ function randomNum(min,max){
 }
 Vue.prototype.$RN = randomNum
 
+function formattime(timestamp) {
+    let newDate = new Date()
+    newDate.setTime(timestamp)
+    let res = newDate.toLocaleString()
+    if (res.includes("下午")) {
+        let finres = res.replace("下午", '')
+        let finres_arr = finres.split(" ")
+        let timee = finres_arr[1].split(":")
+        timee[0] = (Number(timee[0]) + 12) + ''
+        finres_arr[1] = timee.join(":")
+        res = finres_arr.join(" ")
+    }else{
+        res = res.replace("上午", '')
+    }
+    return res
+}
+
+Vue.prototype.$FT = formattime
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

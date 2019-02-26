@@ -1,39 +1,43 @@
 <template>
     <div style="margin: 3px">
         <van-row>
-            <van-col span="6">
-                <div style="margin: 10px auto;text-align: center;">
-                    <img src="static/mapIcon/SDFJ-1.gif" alt="" >
+            <van-col span="12">
+                <div style="text-align: center;">
+                    巡检时间：
                 </div>
             </van-col>
-            <van-col span="18">
-                <van-row>
-                    <van-col span="8">隧道风机001</van-col>
-                    <van-col span="8">&nbsp;</van-col>
-                    <van-col span="8">1天前</van-col>
-                </van-row>
-                <van-row>
-                    <van-col span="8">西黄隧道</van-col>
-                    <van-col span="8">西坪-寺湾</van-col>
-                    <van-col span="8">K20+45</van-col>
-                </van-row>
-                <van-row>
-                    <van-col span="8">
-                        <div>
-                            故障现象：图像偏色
-                        </div>
-                    </van-col>
-                    <van-col span="8">&nbsp;</van-col>
-                    <van-col span="8">已上报</van-col>
-                </van-row>
+            <van-col span="12">
+                <div style="text-align: center;">
+                    {{item.createDate}}
+                </div>
             </van-col>
-            
+        </van-row>
+        <van-row>
+             <van-col span="12">
+                <div style="text-align: center;">
+                    巡检设备数量:
+                </div>
+            </van-col>
+            <van-col span="12">
+                <div style="text-align: center;">
+                    {{item.equipCount}}
+                </div>
+            </van-col>
+        </van-row>
+        <van-row>
+            <van-col>
+                <van-tag v-for="nameitem in item.equips.split(' ')" style="margin: 3px;" type="success">{{nameitem}}</van-tag>
+            </van-col>
         </van-row>
     </div>
 </template>
 
 <script>
 export default {
+
+    props:[
+        'item'
+    ]
     
 }
 </script>

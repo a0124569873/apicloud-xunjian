@@ -4,24 +4,14 @@
             <van-icon name="arrow-left" slot="left" size="30px"/>
         </van-nav-bar>
         <van-collapse v-model="suidaoactive">
-                <van-collapse-item v-for="suidaoitem in suidao" :title="suidaoitem.name" :name="suidaoitem.code">
-                    <van-collapse v-model="typeactive">
-                        <van-collapse-item v-for="typeitem in type" :title="typeitem.name" :name="typeitem.code">
-                            <van-collapse v-model="shebeiactive">
-                                <van-collapse-item v-for="shebeiitem in shebei[typeitem.code]" :title="shebeiitem.name" :name="shebeiitem.code">
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <div @click="clickdetail(shebeiitem)">
-                                            {{shebeiitem.name}}:故障
-                                        </div>
-                                        <div>
-                                            <van-button type="primary" :disabled="shangbao">{{shangbao ? '已上报' : '点击上报' }}</van-button>
-                                        </div>
-                                    </div>
-                                </van-collapse-item>
-                            </van-collapse>
-                        </van-collapse-item>
-                    </van-collapse>
-                </van-collapse-item>
+            <van-collapse-item v-for="suidaoitem in suidao" :title="suidaoitem.name" :name="suidaoitem.code">
+                <van-list v-if="true" style="margin-top: 2px;">
+                    <van-cell v-for="item in suidaoitem.recordlist.dataList" :key="item.timestamp" @click="$router.push('shoudong_record_list_items_list?timestamp=' + item.timestamp)">
+                        <!-- {{item}} -->
+                        <deviceitem :item.sync="item"/>
+                    </van-cell>
+                </van-list>
+            </van-collapse-item>
         </van-collapse>
         <bottom-bar></bottom-bar>
     </div>
@@ -47,10 +37,10 @@ export default {
             // suidaoitem: {
             //     name: "隧道1", code: "suidao1"
             // },
-            suidao: [],
+            suidao: {},
             suidaoactive: [],
             type: [],
-            typeactive: [],
+            recordtive: [],
             shebei: [],
             shebeiactive: [],
             recordlist: {},
@@ -68,16 +58,24 @@ export default {
     mounted (){
         let _this = this
         xunjianService.getAllTunnel().then(res => {
-            _this.suidao = []
+            _this.suidao = {}
             res.map(item => {
-                _this.suidao.push({name: item.name, code: item.code})
-                xunjianService.getXunjianList().then(res => {
-                    res.dataList.map(recorditem => {
-
-                    })
+                _this.suidao[item.code] = item
+                let params = {
+                    pageNo : 1,
+                    pageSize: 5,
+                    sectionCode: item.code,
+                    startTime: '2017-1-31',
+                    endTime: _this.getenddate() 
+                }
+                _this.suidao[item.code].recordlist = {dataList: []}
+                xunjianService.getXunjianList(params).then(res => {
+                     _this.suidao[item.code].recordlist = res
                 })
             })
         })
+        
+        
     },
 
     watch: {
@@ -87,6 +85,14 @@ export default {
     },
 
     methods: {
+
+        getenddate(){
+            let timestamp = new Date().getTime()
+            let newDate = new Date()
+            newDate.setTime(timestamp)
+            let res =  newDate.toLocaleString()
+            return res.replace("/",'-')
+        },
 
         clickdetail(item){
             this.$router.push(`shoudong_detail?gz_id=${item.code}`)

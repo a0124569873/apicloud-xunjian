@@ -4,7 +4,7 @@
  * @param {time} time 时间戳 单位 秒
  */
 export function formatTime(time) {
-    time = +time * 1000;
+    time = time * 1000;
     const d = new Date(time);
     const now = Date.now();
 

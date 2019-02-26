@@ -27,7 +27,7 @@ export default {
     },
 
     mounted (){
-        this.$router.push("guzhang")
+        this.$router.push("xunjian")
     },
 
     methods: {

@@ -9,32 +9,25 @@ class xunjianService {
         })
     }
 
-    getTunnel () {
-        return request({
-            url: '',
-            method: 'get'
-        })
-    }
-
     /**
      * 获取隧道下的巡检记录
      * @param {*} params 传入隧道code
      * params.pageNo
      * params.pageSize
      * params.sectionCode
-     * params.startTime
-     * params.endTime
+     * params.startTime 2017-01-31
+     * params.endTime new Date().setTime()
      */
     getXunjianList(params){
         return request({
-            url: '',
+            url: '/equDetect/inspectPage',
             method: 'get',
             params: params
         })
     }
 
     /**
-     * 获取某条巡检记录的详情
+     * 获取某条巡检记录的详情列表
      * @param {*} params 巡检记录id【timestamp】
      * params.pageNo
      * params.pageSize
@@ -42,7 +35,7 @@ class xunjianService {
      */
     getXunjianItems(params){
         return request({
-            url: '',
+            url: '/electric/report',
             method: 'get',
             params: params
         })
@@ -56,12 +49,33 @@ class xunjianService {
      */
     getXunjianItemsItem(params){
         return request({
-            url: '',
+            url: '/electric/reportItem',
             method: 'get',
             params: params
         })
     }
 
+
+
+    /**
+     * 添加巡检记录
+     * @param {*} params 
+        params.timestamp = new Date().getTime()
+        params.faultCount = '10'
+        params.section = "suidao1"
+        params.equips = 'AAA xxx ccc'
+        params.createDate = 2019-02-23 19:19:19
+        params.sectionCode = 'aaaa'
+        params.equipCount = '10'
+        params.allCheck = 1
+     */
+    addXunjianRecordItem(params){
+        return request({
+            url: '/equDetect/addInspectRecord',
+            method: 'post',
+            params: params
+        })
+    }
     /**
      * 添加一条巡检记录的记录
      * @param {*} params 
@@ -72,7 +86,7 @@ class xunjianService {
         params.solutionCode = '1'
         params.imageUrl = imgs
      */
-    addXunjianRecordItem(params){
+    addXunjianRecordItemItem(params){
         return request({
             url: '/equDetect/addSingleInspectRecord',
             method: 'post',

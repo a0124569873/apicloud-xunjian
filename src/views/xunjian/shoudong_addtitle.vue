@@ -39,6 +39,11 @@ import xunjianService from '../../services/xunjianService'
 
 export default {
 
+    props: [
+        'typecode',
+        'suidaocode'
+    ],
+
     data(){
         return {
             show: false,
@@ -54,7 +59,8 @@ export default {
             typelist: {},
             shebeilist: {},
             res: {},
-            code: ''
+            code: '',
+            categoryCode: '',
 
         }
     },
@@ -69,6 +75,7 @@ export default {
         xunjianService.getAllDevice().then(res =>{
             _this.res = res
             res.map(item => {
+                this.suidaolist[item.sectionName] = item.sectionCode
                 this.suidaoArr.push(item.sectionName)
             })
         })
@@ -83,6 +90,7 @@ export default {
                         _this.typeArr = []
                         item.treeCategory.map(typeitem => {
                             _this.typeArr.push(typeitem.categoryName)
+                            _this.typelist[typeitem.categoryName] = typeitem.categoryCode
                         })
                     }
                 })
@@ -137,6 +145,15 @@ export default {
             if(this.poptype == 'shebei' && this.shebei != '请选择>'){
                 this.code = this.shebeilist[this.shebei]
             }
+            if(this.poptype == 'type' && this.type != '请选择>'){
+                this.categoryCode = this.typelist[this.type]
+                this.$emit('update:typecode',this.categoryCode)
+            }
+            if(this.poptype == 'suidao' && this.suidao != '请选择>'){
+                this.suidaocode = this.suidaolist[this.suidao]
+                this.$emit('update:suidaocode',this.suidaocode)
+            }
+
         },
     }
 }

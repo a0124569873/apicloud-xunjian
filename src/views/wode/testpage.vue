@@ -8,6 +8,11 @@
             >
                 复选框 {{ item }}
             </van-checkbox>
+
+            <van-button v-for="item in listarr">
+                {{item}}
+            </van-button>
+
         </van-checkbox-group>
     </div>
 </template>
@@ -20,7 +25,13 @@ export default {
                 '1',
                 '2',
                 '3'
-            ]    
+            ],
+
+            listarr: {
+                aaa: {aaa: 111, bbb: 222},
+                bbb: {aaa: 111, bbb: 222},
+            }
+
         }
     },
 
