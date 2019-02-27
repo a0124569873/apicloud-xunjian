@@ -72,9 +72,9 @@
                 </van-row>
             </div>
 
-            <van-button @click="test" type="primary" style="margin-top: 50px;" size="large">
+            <!-- <van-button @click="test" type="primary" style="margin-top: 50px;" size="large">
                 测试按钮
-            </van-button>
+            </van-button> -->
 
             <bottom-bar></bottom-bar>
 
@@ -122,21 +122,21 @@ export default {
 
         openscan(){
             let _this = this
-            // _this.$router.push(`saoma_add?deviceid=aaa`)
-            // let deviceid = ""
 
-            // var FNScanner = api.require('FNScanner');
-            // FNScanner.open({
-            //     autorotation: true
-            // }, function(ret, err) {
-            //     if (ret && ret.eventType == 'success') {
-                    // let info = ret.content
-                    let info = '{"categoryCode": "COVIJCQ","categoryName": "CO/VI检测器","code": "001001YCKCOVI","name": "CO/VI检测器YCKCOVI","sectionCode": "CU4933Y","sectionName": "西簧隧道"}'
+            var FNScanner = api.require('FNScanner');
+            FNScanner.open({
+                autorotation: true
+            }, function(ret, err) {
+                if (ret && ret.eventType == 'success') {
+                    let info = ret.content
+                    // let info = '{"categoryCode": "COVIJCQ","categoryName": "CO/VI检测器","code": "001001YCKCOVI","name": "CO/VI检测器YCKCOVI","sectionCode": "CU4933Y","sectionName": "西簧隧道"}'
                     _this.$router.push(`add_record?info=${info}&type=saoma`)
-            //     } else {
-            //         _this.$toast(JSON.stringify(err))
-            //     }
-            // });
+                } else {
+                    if(err != ''){
+                        _this.$toast('扫码失败' + JSON.stringify(err))
+                    }
+                }
+            });
         },
 
     }

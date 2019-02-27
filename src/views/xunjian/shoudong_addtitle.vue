@@ -142,16 +142,26 @@ export default {
         popconfirm(value, index){
             this.show = false
             this[this.poptype] = value
-            if(this.poptype == 'shebei' && this.shebei != '请选择>'){
-                this.code = this.shebeilist[this.shebei]
-            }
-            if(this.poptype == 'type' && this.type != '请选择>'){
-                this.categoryCode = this.typelist[this.type]
-                this.$emit('update:typecode',this.categoryCode)
-            }
+
             if(this.poptype == 'suidao' && this.suidao != '请选择>'){
                 this.suidaocode = this.suidaolist[this.suidao]
                 this.$emit('update:suidaocode',this.suidaocode)
+                this.type = '请选择>'
+                this.shebei = '请选择>'
+                this.code = ''
+                this.categoryCode = ''
+                this.$emit('update:typecode','')
+            }
+
+            if(this.poptype == 'type'){
+                this.categoryCode = this.typelist[this.type]
+                this.$emit('update:typecode',this.categoryCode)
+                this.shebei = '请选择>'
+                this.code = ''
+            }
+
+            if(this.poptype == 'shebei' && this.shebei != '请选择>'){
+                this.code = this.shebeilist[this.shebei]
             }
 
         },

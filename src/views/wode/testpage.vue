@@ -9,8 +9,14 @@
                 复选框 {{ item }}
             </van-checkbox>
 
-            <van-button v-for="item in listarr">
-                {{item}}
+            <van-button v-for="item,index in listarr">
+                {{item}}{{index}}
+            </van-button>
+
+            {{suidao['AAA'].list.aaa}}
+
+            <van-button @click="testclick">
+                fdgdgdfg
             </van-button>
 
         </van-checkbox-group>
@@ -20,6 +26,22 @@
 export default {
     data(){
         return {
+            suidao: {
+                'AAA': {
+                    ccc: 999,
+                    list: {
+                        aaa: 111,
+                        bbb: 222
+                    }
+                },
+                'BBB': {
+                    ccc: 999,
+                    list: {
+                        aaa: 111,
+                        bbb: 222
+                    }
+                }
+            },
             result: [],
             list: [
                 '1',
@@ -36,6 +58,13 @@ export default {
     },
 
     methods: {
+
+        testclick(){
+            this.suidao['AAA'].list = {
+                aaa: 999,
+                bbb: 555
+            }
+        },
 
         paizhao1(){
             let _this = this;

@@ -3,14 +3,20 @@
         <van-nav-bar title="手动巡检记录" @click-left="onClickLeft" class="title-color">
             <van-icon name="arrow-left" slot="left" size="30px"/>
         </van-nav-bar>
-        <van-collapse v-model="suidaoactive">
-            <van-collapse-item v-for="suidaoitem in suidao" :title="suidaoitem.name" :name="suidaoitem.code">
+        <van-collapse v-model="suidaoactive" v-if="isrepaint">
+            <van-collapse-item v-for="suidaoitem,index in suidao" :title="suidaoitem.name + '-共' + suidaoitem.page.total + '条记录'" :name="suidaoitem.code" v-if="isrepaint">
                 <van-list v-if="true" style="margin-top: 2px;">
-                    <van-cell v-for="item in suidaoitem.recordlist.dataList" :key="item.timestamp" @click="$router.push('shoudong_record_list_items_list?timestamp=' + item.timestamp)">
+                    <van-cell v-for="item in suidaoitem.recordlist.dataList" :key="item.timestamp" @click="$router.push(`shoudong_record_list_items_list?timestamp=${item.timestamp}`)">
                         <!-- {{item}} -->
                         <deviceitem :item.sync="item"/>
                     </van-cell>
                 </van-list>
+                <van-pagination 
+                    v-model="suidao[suidao[index].code].page.pageNo"
+                    :total-items="suidao[index].page.total"
+                    :items-per-page="suidao[index].page.pageSize"
+                    @change="curpagechange(suidao[index].code)"
+                    />
             </van-collapse-item>
         </van-collapse>
         <bottom-bar></bottom-bar>
@@ -22,6 +28,7 @@
 import deviceitem from './shoudong_list_item'
 import * as data from '../data'
 import xunjianService from '../../services/xunjianService'
+import Vue from 'vue'
 
 
 export default {
@@ -32,11 +39,8 @@ export default {
 
     data(){
         return {
-            // shangbao: true,
+            isrepaint: true,
             active: 0,
-            // suidaoitem: {
-            //     name: "隧道1", code: "suidao1"
-            // },
             suidao: {},
             suidaoactive: [],
             type: [],
@@ -44,7 +48,6 @@ export default {
             shebei: [],
             shebeiactive: [],
             recordlist: {},
-
         }
     },
 
@@ -60,6 +63,7 @@ export default {
         xunjianService.getAllTunnel().then(res => {
             _this.suidao = {}
             res.map(item => {
+                _this.isrepaint = false
                 _this.suidao[item.code] = item
                 let params = {
                     pageNo : 1,
@@ -69,10 +73,17 @@ export default {
                     endTime: _this.getenddate() 
                 }
                 _this.suidao[item.code].recordlist = {dataList: []}
+                _this.suidao[item.code].page = {}
+                _this.suidao[item.code].page.pageNo = 1
+                _this.suidao[item.code].page.pageSize = 5
+                _this.suidao[item.code].page.total = 5
                 xunjianService.getXunjianList(params).then(res => {
-                     _this.suidao[item.code].recordlist = res
+                    _this.suidao[item.code].page.total = res.total
+                    _this.suidao[item.code].recordlist = res
+                    _this.isrepaint = true
                 })
             })
+
         })
         
         
@@ -86,16 +97,31 @@ export default {
 
     methods: {
 
+        curpagechange(suidaocode){
+
+            let _this = this
+            let params = {
+                pageNo : this.suidao[suidaocode].page.pageNo,
+                pageSize: 5,
+                sectionCode: suidaocode,
+                startTime: '2017-1-31',
+                endTime: this.getenddate() 
+            }
+            _this.isrepaint = false
+            xunjianService.getXunjianList(params).then(res => {
+                _this.suidao[suidaocode].page.total = res.total
+                _this.suidao[suidaocode].recordlist = res
+                _this.isrepaint = true
+            })
+
+        },
+
         getenddate(){
             let timestamp = new Date().getTime()
             let newDate = new Date()
             newDate.setTime(timestamp)
             let res =  newDate.toLocaleString()
             return res.replace("/",'-')
-        },
-
-        clickdetail(item){
-            this.$router.push(`shoudong_detail?gz_id=${item.code}`)
         },
 
         onClickLeft(){

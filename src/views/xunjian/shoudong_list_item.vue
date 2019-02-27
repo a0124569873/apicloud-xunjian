@@ -25,7 +25,7 @@
             </van-col>
         </van-row>
         <van-row>
-            <van-col>
+            <van-col style="text-align: center;">
                 <van-tag v-for="nameitem in item.equips.split(' ')" style="margin: 3px;" type="success">{{nameitem}}</van-tag>
             </van-col>
         </van-row>

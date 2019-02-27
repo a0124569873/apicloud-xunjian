@@ -13,7 +13,7 @@
         <van-row class="showdong_add_item">
             <van-col span="24" style="text-align: center;">
                 <van-button type="primary" style="width: 200px;" @click="upload">提交本次记录</van-button>
-                <van-button type="primary" style="width: 200px;" @click="test">上报</van-button>
+                <!-- <van-button type="primary" style="width: 200px;" @click="test">上报</van-button> -->
             </van-col>
         </van-row>
 
@@ -62,7 +62,12 @@ export default {
 
     watch: {
        typecode(n, o){
-           this.questions = type.typecode[n].split(",")
+           if(n == ''){
+               this.questions = ["请选择设备类型"]
+           }else{
+               this.questions = type.typecode[n].split(",")
+           }
+           
        } 
     },
 

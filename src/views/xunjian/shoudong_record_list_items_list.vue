@@ -11,6 +11,12 @@
                 <deviceitem :item="item"/>
             </van-cell>
         </van-list>
+        <van-pagination 
+        v-model="curPage"
+        :total-items="total"
+        :items-per-page="pagesize"
+        @change="curpagechange()"
+        />
     </div>
 </template>
 <script>
@@ -26,23 +32,41 @@ export default {
 
     data(){
         return {
-            list: []
+            list: [],
+            curPage: 1,
+            total: 0,
+            pagesize: 5,
+            timestamp: ''
         }
     },
 
     mounted(){
 
-        let _this = this
+        this.timestamp = this.$route.query.timestamp
+        this.pagemodify()
 
-        let timestamp = this.$route.query.timestamp
-        let params = {
-            pageNo: 1,
-            pageSize: 5,
-            timestamp: timestamp
+    },
+
+    methods: {
+        curpagechange(){
+            this.pagemodify()
+        },
+
+        pagemodify(){
+
+            let _this = this
+            let params = {
+                pageNo: this.curPage,
+                pageSize: this.pagesize,
+                timestamp: this.timestamp
+            }
+            xunjianService.getXunjianItems(params).then(res => {
+                _this.list = res.msg.content
+                _this.total = res.msg.size
+                
+            })
+
         }
-        xunjianService.getXunjianItems(params).then(res => {
-            _this.list = res.msg.content
-        })
     }
 }
 </script>

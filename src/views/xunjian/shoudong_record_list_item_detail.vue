@@ -1,6 +1,6 @@
 <template>
     <div>
-        <van-nav-bar title="巡检记录设备详情" @click-left="onClickLeft" class="title-color">
+        <van-nav-bar title="巡检记录设备详情" @click-left="$router.push(`shoudong_record_list_items_list?timestamp=${timestamp}`)" class="title-color">
             <van-icon name="arrow-left" slot="left" size="30px"/>
         </van-nav-bar>
 
@@ -33,10 +33,10 @@
                 <van-row class="showdong_add_item1">
                     <van-col span="24">
                         <div class="title">
-                            现场图片[{images.length}}]:
+                            现场图片[{{images.length}}]:
                         </div>
                         <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%;margin: 5px;">
-                            <img v-for="item in images" :src="item" alt="" style="width: 200px; height: 155px;margin: 5px;">
+                            <img v-for="item in images" :src="item" alt="" style="width: 100px; height: 100px;margin: 5px;border: 1px solid #000;">
                             <!-- <div v-for="item in images">
                                 {{item}}
                             </div> -->
@@ -113,6 +113,8 @@ export default {
 
             zhuanghao: '',
 
+            timestamp: '',
+
 
         }
     },
@@ -124,6 +126,7 @@ export default {
         let _this = this
 
         let timestamp = this.$route.query.timestamp
+        this.timestamp = timestamp
         let equipCode = this.$route.query.equipCode
 
         let params = {
@@ -132,6 +135,8 @@ export default {
         }
 
         xunjianService.getXunjianItemsItem(params).then(res => {
+            console.log(res);
+            
             let appearance_arr = res.detectResult.appearance.split("|")
             _this.beizhu = appearance_arr[1]
             _this.questionsres = appearance_arr[0].split(",")

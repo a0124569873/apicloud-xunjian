@@ -8,19 +8,25 @@
         >
             <van-cell
                 v-for="item in list"
-                :key="item"
                 :title="item.devicename"
             />
         </van-list>
+        
+        <div style="text-align: center;margin: 10px;" v-if="list.length == 0">
+            本地记录为空
+        </div>
 
-        <van-button
-            type="primary"
-            size="large"
-            style="margin: 10px 0px;"
-            @click="uploadrecord"
-        >
-            上传记录
-        </van-button>
+        <div style="text-align: center;">
+            <van-button
+                type="primary"
+                size="large"
+                style="margin: 10px 0px;width:80%"
+                @click="uploadrecord"
+            >
+                上传记录
+            </van-button>
+        </div>
+
 
         <bottom-bar></bottom-bar>
 
@@ -144,6 +150,7 @@ export default {
                 
                 xunjianService.addXunjianRecordItem(params).then(res => {
                     _this.$toast(`隧道[${_this.tunnellist[item].name}]记录上传成功`)
+                    localStorage.setItem('xunjianrecord', '{}')
                 }).catch(res => {
                     _this.$toast(res)
                 })

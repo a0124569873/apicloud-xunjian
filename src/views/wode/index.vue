@@ -6,7 +6,7 @@
         <van-row class="title-color" style="padding: 10px;">
             <van-col span="8">
                 <div style="border-radius: 50%;margin: 0px 20px;">
-                    <van-icon name="manager" size="100px"></van-icon>
+                    <van-icon name="manager" size="100px" color="#409EFF"></van-icon>
                 </div>
             </van-col>
             <van-col span="16" style="color: white;">
@@ -28,7 +28,7 @@
                 我的上报
             </div>
             <div slot="right">
-                <van-icon name="arrow" size="40px" @click="$router.push('zidong_list')"></van-icon>
+                <van-icon name="arrow" size="40px" @click="$router.push('shoudong_list')"></van-icon>
             </div>
         </van-nav-bar>
 
@@ -43,7 +43,7 @@
 
         <van-nav-bar style="margin: 5px 0px;" @click-right="denglu">
             <div slot="left">
-                跳到登录
+                退出登录
             </div>
             <div slot="right">
                 <van-icon name="arrow" size="40px" @click="denglu"></van-icon>
