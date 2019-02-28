@@ -32,16 +32,16 @@
             </div>
         </van-nav-bar>
 
-        <van-nav-bar style="margin: 5px 0px;">
+        <!-- <van-nav-bar style="margin: 5px 0px;">
             <div slot="left">
                 测试页面
             </div>
             <div slot="right">
                 <van-icon name="arrow" size="40px" @click="$router.push('test')"></van-icon>
             </div>
-        </van-nav-bar>
+        </van-nav-bar> -->
 
-        <van-nav-bar style="margin: 5px 0px;" @click-right="denglu">
+        <van-nav-bar style="margin: 5px 0px;">
             <div slot="left">
                 退出登录
             </div>
@@ -49,6 +49,18 @@
                 <van-icon name="arrow" size="40px" @click="denglu"></van-icon>
             </div>
         </van-nav-bar>
+        <van-nav-bar style="margin: 5px 0px;">
+            <div slot="left">
+                告警记录
+            </div>
+            <div slot="right">
+                <van-icon name="arrow" size="40px" @click="$router.push('warning')"></van-icon>
+            </div>
+        </van-nav-bar>
+
+        <!-- <van-button @click="test">
+            测试按钮
+        </van-button> -->
 
     </div>
 </template>
@@ -71,8 +83,23 @@ export default {
 
     methods: {
 
+        test(){
+            // this.$dialog.alert({message: "sdfsdfsdf"})
+            // let params = {}
+            // api.notification();
+            // this.$dialog.alert({message: "sdfsdfsdf<br/>gferwer"})
+
+            let aaa = {}
+
+            // console.log(aaa['ss'] == undefined);
+
+            console.log(localStorage.getItem("asdasd") == null);
+            
+            
+        },
+
         denglu(){
-            this.$toast("sdfsdfsdfsdf")
+            // this.$toast("sdfsdfsdfsdf")
             this.$router.push("/login")
         }
 

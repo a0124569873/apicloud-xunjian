@@ -7,6 +7,7 @@
 <script>
 
 import * as config from '../config'
+import errcode from './errcode'
 
 export default {
   data() {
@@ -59,10 +60,40 @@ export default {
 				if(data.data.errMsg == undefined) {
 					data.data.errMsg = "故障已恢复";
 				}
+				
 				let errorMessage = data.data.sectionName + "-" + data.data.name + "-"  + data.data.errMsg;
+
+				if (errcode[data.data.errMsg] != undefined) {
+					errorMessage += ('<br/>' + errcode[data.data.errMsg])
+				}else{
+					errorMessage += ('<br/>' + '未找到解决方案')
+				}
+
+				if ((typeof api) != 'undefined'){
+					api.notification();
+				}
+				
+
 				this.$dialog.alert({
 					message: errorMessage
 				})
+
+				let warn = localStorage.getItem("warnrecord")
+
+				if(warn == null){
+					warn = '{}'
+				}
+
+				let timestamp = new Date().getTime()
+
+				let warn_json = JSON.parse(warn)
+
+				warn_json[timestamp] = {timestamp: timestamp, msg : errorMessage, name: data.data.name}
+
+				let warn_str = JSON.stringify(warn_json)
+
+				localStorage.setItem("warnrecord", warn_str)
+
 			}
 		}
 

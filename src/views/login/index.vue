@@ -32,13 +32,14 @@
         </van-row>
         <van-row type="flex" justify="center" style="margin-top: 100px;">
             <van-col>
-                <van-button type="primary" style="width: 200px;">登录</van-button>
+                <van-button type="primary" style="width: 200px;" @click="login">登录</van-button>
             </van-col>
         </van-row>
     </div>
 </template>
 <script>
 export default {
+
     data(){
         return {
             formdata: {
@@ -46,6 +47,12 @@ export default {
                 password: ''
             }
         }
+    },
+
+    methods: {
+        login(){
+            this.$router.push("xunjian")
+        },
     }
 }
 </script>

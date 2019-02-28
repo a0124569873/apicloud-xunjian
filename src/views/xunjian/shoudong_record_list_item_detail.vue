@@ -36,7 +36,7 @@
                             现场图片[{{images.length}}]:
                         </div>
                         <div style="display: flex;align-items: center;flex-wrap: wrap; width: 100%;margin: 5px;">
-                            <img v-for="item in images" :src="item" alt="" style="width: 100px; height: 100px;margin: 5px;border: 1px solid #000;">
+                            <img v-for="item in images" :src="item" alt="" style="width: 100px; height: 100px;margin: 5px;border: 1px solid #000;" @click="imgclick">
                             <!-- <div v-for="item in images">
                                 {{item}}
                             </div> -->
@@ -86,6 +86,7 @@
 
 import * as config from '../config'
 import xunjianService from '../../services/xunjianService'
+import { ImagePreview } from 'vant';
 
 export default {
 
@@ -135,8 +136,6 @@ export default {
         }
 
         xunjianService.getXunjianItemsItem(params).then(res => {
-            console.log(res);
-            
             let appearance_arr = res.detectResult.appearance.split("|")
             _this.beizhu = appearance_arr[1]
             _this.questionsres = appearance_arr[0].split(",")
@@ -153,7 +152,9 @@ export default {
     },
 
     methods: {
-        
+        imgclick(){
+            ImagePreview(this.images);
+        }
     }
 }
 </script>

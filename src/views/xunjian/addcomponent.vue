@@ -89,18 +89,6 @@ export default {
 
         test(){
 
-            let formdata = new FormData()
-            formdata.append('file64', this.filess[0].content.split(",")[1]);
-            formdata.append('fileName', this.$RN(0, 555) + 'aa.png');
-            formdata.append('fileLength', this.filess[0].file.size);
-
-            axios.create().post(config.imguploaddomain, formdata).then(res => {
-                console.log(res);
-                
-            }).catch(res => {
-                console.log(res);
-                
-            })
         },
 
         delall(){

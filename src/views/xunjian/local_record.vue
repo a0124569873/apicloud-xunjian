@@ -57,8 +57,8 @@ export default {
         let xjr_json = JSON.parse(xjr)
 
         Object.keys(xjr_json).map(item => {
-            xjr_json[item].map(suidaoitem => {
-                this.list.push(suidaoitem)
+            Object.keys(xjr_json[item]).map(suidaoitem_key => {
+                this.list.push(xjr_json[item][suidaoitem_key])
             })
         })
 
@@ -76,6 +76,11 @@ export default {
 
         uploadrecord(){
 
+            if(this.list.length == 0){
+                this.$toast("本地记录为空")
+                return
+            }
+
             let _this = this
 
             let xjr = localStorage.getItem("xunjianrecord")
@@ -89,29 +94,29 @@ export default {
 
                 let equips = []
 
-                xjr_json[item].map(eachsuidao_item => {
+                 Object.keys(xjr_json[item]).map(eachsuidao_item_key => {
 
                     //上传记录
                     let params = {
-                        equipCode : eachsuidao_item.equipCode,
+                        equipCode : xjr_json[item][eachsuidao_item_key].equipCode,
                         serverity : '1',
-                        symptom : eachsuidao_item.symptom,
+                        symptom : xjr_json[item][eachsuidao_item_key].symptom,
                         timestamp : timestamp,
                         solutionCode : '1',
-                        imageUrl : eachsuidao_item.imageUrl
+                        imageUrl : xjr_json[item][eachsuidao_item_key].imageUrl
                     }
                     xunjianService.addXunjianRecordItemItem(params).then(res => {
                         if(res == true){
-                            this.$toast(`上传记录${eachsuidao_item.devicename}结束`)
+                            this.$toast(`上传记录${xjr_json[item][eachsuidao_item_key].devicename}结束`)
                         }
                     })
 
                     //上传图片
-                    eachsuidao_item.imgs.map(imgitem =>{
+                    Object.keys(xjr_json[item][eachsuidao_item_key].imgs).map(imgitem_key =>{
                         let formdata = new FormData()
-                        formdata.append('file64', imgitem['file-content'].split(",")[1]);
-                        formdata.append('fileName', imgitem['file-name']);
-                        formdata.append('fileLength', imgitem['file-size']);
+                        formdata.append('file64', xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-content'].split(",")[1]);
+                        formdata.append('fileName', xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']);
+                        formdata.append('fileLength', xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-size']);
                         
                         let config = {
                             // headers:{'Content-Type':'multipart/form-data'}
@@ -120,7 +125,7 @@ export default {
                         axios.create().post(_this.domainconfig, formdata, config).then(res => {
                             
                             if (res.data.code == 200){
-                                _this.$toast("上传" + imgitem['file-name'] + "成功")
+                                _this.$toast("上传" + xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name'] + "成功")
                             }else{
                                 _this.$toast("上传失败")
                             }
@@ -133,8 +138,7 @@ export default {
                     })
 
                     //拼接记录equits
-                    equips.push(eachsuidao_item.devicename)
-
+                    equips.push( xjr_json[item][eachsuidao_item_key].devicename)
                 })
 
                 let params = {
@@ -149,8 +153,9 @@ export default {
                 }
                 
                 xunjianService.addXunjianRecordItem(params).then(res => {
-                    _this.$toast(`隧道[${_this.tunnellist[item].name}]记录上传成功`)
+                    _this.$dialog.alert({message: `隧道[${_this.tunnellist[item].name}]记录上传成功`})
                     localStorage.setItem('xunjianrecord', '{}')
+                    _this.list = []
                 }).catch(res => {
                     _this.$toast(res)
                 })

@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style>
+/* 设置body的大小 */
 #app{
   padding:0px;
 

@@ -93,7 +93,14 @@ export default {
 
     data(){
         return {
-
+            scankeys: [
+                "categoryCode",
+                "categoryName",
+                "code",
+                "name",
+                "sectionCode",
+                "sectionName",
+            ]
         }  
     },
 
@@ -128,6 +135,14 @@ export default {
                 autorotation: true
             }, function(ret, err) {
                 if (ret && ret.eventType == 'success') {
+                   
+                    if ( !_this.checkscanjson(ret.content) ) {
+                        _this.$toast("二维码内容错误")
+                        return
+                    }
+
+                    
+
                     let info = ret.content
                     // let info = '{"categoryCode": "COVIJCQ","categoryName": "CO/VI检测器","code": "001001YCKCOVI","name": "CO/VI检测器YCKCOVI","sectionCode": "CU4933Y","sectionName": "西簧隧道"}'
                     _this.$router.push(`add_record?info=${info}&type=saoma`)
@@ -139,6 +154,20 @@ export default {
             });
         },
 
+        checkscanjson(content){
+            if ( ! this.$isJSON(content) ) {
+                return false
+            }
+
+            let con_json = JSON.parse(content)
+            let res = true
+            this.scankeys.map(item => {
+                if (con_json[item] == undefined) {
+                    res = false
+                }
+            })
+            return res
+        }
     }
 }
 </script>

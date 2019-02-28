@@ -156,6 +156,8 @@ export default {
             if(this.poptype == 'type'){
                 this.categoryCode = this.typelist[this.type]
                 this.$emit('update:typecode',this.categoryCode)
+                // console.log(this.categoryCode);
+                
                 this.shebei = '请选择>'
                 this.code = ''
             }

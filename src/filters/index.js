@@ -26,3 +26,8 @@ export function formatTime(time) {
     }
 }
 
+export function toLocalStr(time){
+    let date = new Date(time)
+    return date.toLocaleString()
+}
+

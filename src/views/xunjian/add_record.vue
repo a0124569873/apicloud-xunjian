@@ -31,6 +31,8 @@ import shoudongaddtitle from './shoudong_addtitle'
 import * as type from '../type'
 import xunjianService from '../../services/xunjianService'
 
+import lrz from 'lrz'
+
 export default {
 
     components: {
@@ -56,6 +58,7 @@ export default {
             devicetype: '',
             typecode: '',
             suidaocode: '',
+            result: 'static/jietu/photo-suidao-fengji.png',
 
         }
     },
@@ -65,7 +68,12 @@ export default {
            if(n == ''){
                this.questions = ["请选择设备类型"]
            }else{
-               this.questions = type.typecode[n].split(",")
+               console.log(n);
+               if(type.typecode[n] != undefined){
+                   this.questions = type.typecode[n].split(",")
+               }else{
+                   this.questions = ["设备类型未录入"]
+               }
            }
            
        } 
@@ -91,6 +99,24 @@ export default {
     },
 
     methods: {
+
+        encodeimg(file, suidaocode, codetimestamp, filename){
+
+            lrz(file,{quality: 0.1}).then(res =>{
+                let xunjianrecord = localStorage.getItem("xunjianrecord")
+                let xjr_json = JSON.parse(xunjianrecord)
+                xjr_json[suidaocode][codetimestamp]['imgs'][filename] = {
+                    'file-name' : filename,
+                    'file-size' : res.fileLen,
+                    'file-content' : res.base64
+                }
+
+                let dst_str = JSON.stringify(xjr_json)
+                localStorage.setItem('xunjianrecord', dst_str)
+                
+            })
+
+        },
 
         updatetypecode(typecode){
             this.questions = type.typecode[typecode].split(",")
@@ -121,14 +147,20 @@ export default {
 
             if (this.$refs.addcom.filess.length != 0 || this.$refs.addcom.questionres.length != 0 || this.$refs.addcom.inputval != ''){
 
+                let timestamp = new Date().getTime()
+
                 let problem = this.$refs.addcom.questionres.join(",") + "|" + this.$refs.addcom.inputval
                 let imgsurl_arr = []
-                let img_arr = []
+                let img_arr = {}
 
                 Object.keys(this.$refs.addcom.files).map(item => {
+
                     this.$refs.addcom.files[item].finimgurl = _this.code + "-" + new Date().getTime() +  "-" + this.$RN(0, 9999) +  "-" + this.$refs.addcom.files[item].file.file.name
-                    img_arr.push({'file-name': this.$refs.addcom.files[item].finimgurl, 'file-size': this.$refs.addcom.files[item].file.file.size, 'file-content': this.$refs.addcom.files[item].file.content})
+
+                    this.encodeimg(this.$refs.addcom.files[item].file.file, this.suidaocode, this.code + timestamp, this.$refs.addcom.files[item].finimgurl)
+
                     imgsurl_arr.push(this.$refs.addcom.files[item].finimgurl)
+
                 }) 
                 let imgs = imgsurl_arr.join(",")
 
@@ -140,16 +172,17 @@ export default {
                 let xjr_json = JSON.parse(xunjianrecord)
 
                 if(xjr_json[this.suidaocode] == undefined){
-                    xjr_json[this.suidaocode] = []
+                    xjr_json[this.suidaocode] = {}
                 }
 
-                xjr_json[this.suidaocode].push({
+                xjr_json[this.suidaocode][this.code + timestamp] = {
+                    timestamp: timestamp,
                     devicename: this.devicename,
                     equipCode: this.code,
                     symptom: problem,
                     imageUrl: imgs,
-                    imgs: img_arr
-                })
+                    imgs: {}
+                }
 
                 let dst_str = JSON.stringify(xjr_json)
                 localStorage.setItem('xunjianrecord', dst_str)
@@ -158,6 +191,14 @@ export default {
             }else{
                 this.$toast("请输入问题描述")
             }
+        },
+
+        readxjr(){
+
+        },
+
+        writexjr(){
+            
         },
 
         onClickLeft(){

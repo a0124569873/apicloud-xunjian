@@ -1,40 +1,46 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+
+//引入vue和vuerouter
 import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+//引入vant框架
 import Vant from 'vant'
 import 'vant/lib/index.css'
 Vue.use(Vant)
 
+//引入全局axios
 import axios from 'axios'
 Vue.prototype.$http = axios
 
-// import MuseUI from 'muse-ui';
-// import 'muse-ui/dist/muse-ui.css';
-// Vue.use(MuseUI);
-// import Toast from 'muse-ui-toast';
-// Vue.use(Toast);
-
+//注册svg-icon-font组件
 import '@/assets/iconfont/iconfont'
 import IconSvg from "./components/common/IconSvg.vue"; // svg组件
-// 注册全局组件（register global）
 Vue.component("icon-svg", IconSvg);
 
+//引入底栏组件
 import BottomBar from "./components/common/BottomBar.vue"
 Vue.component("bottom-bar", BottomBar);
 
+//引入全局过滤器
 import * as filters from "./filters/index"; // 全局过滤器
 // 注册全局实用程序过滤器（register global utility filters）.
 Object.keys(filters).forEach(key => {
     Vue.filter(key, filters[key]);
 });
 
+//引入全局样式
 import './assets/theme/index.scss'
 
 Vue.config.productionTip = false
 
+/**
+ * 生成随机数字
+ * @param {*} min 最小边界
+ * @param {*} max 最大边界
+ */
 function randomNum(min,max){ 
   switch(arguments.length){ 
       case 1: 
@@ -50,6 +56,10 @@ function randomNum(min,max){
 }
 Vue.prototype.$RN = randomNum
 
+/**
+ * 修改time格式 node环境会返回 24小时制 浏览器环境会返回 12小时制
+ * @param {*} timestamp 
+ */
 function formattime(timestamp) {
     let newDate = new Date()
     newDate.setTime(timestamp)
@@ -66,8 +76,31 @@ function formattime(timestamp) {
     }
     return res
 }
-
 Vue.prototype.$FT = formattime
+
+/**
+ * 判断字符串是否为json
+ * @param {*} str 
+ */
+function isJSON(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            if(typeof obj == 'object' && obj ){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch(e) {
+            console.log('error：'+str+'!!!'+e);
+            return false;
+        }
+    }
+    console.log('It is not a string!')
+}
+Vue.prototype.$isJSON = isJSON
+
 
 /* eslint-disable no-new */
 new Vue({

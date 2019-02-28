@@ -18,6 +18,7 @@ import gz_detail from '@/views/guzhang/gz_detail'
 
 import wode from '@/views/wode'
 import test from '@/views/wode/testpage.vue'
+import warning from '@/views/wode/warning.vue'
 
 import login from '@/views/login'
 import passwd from '@/views/login/alterpasswd'
@@ -111,6 +112,11 @@ export default new Router({
           path: 'test',
           name: 'test',
           component: test,
+        },
+        {
+          path: 'warning',
+          name: 'warning',
+          component: warning,
         },
       ]
     }
