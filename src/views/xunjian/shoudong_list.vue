@@ -4,7 +4,7 @@
             <van-icon name="arrow-left" slot="left" size="30px"/>
         </van-nav-bar>
         <van-collapse v-model="suidaoactive" v-if="isrepaint">
-            <van-collapse-item v-for="suidaoitem,index in suidao" :title="suidaoitem.name + '-共' + suidaoitem.page.total + '条记录'" :name="suidaoitem.code" v-if="isrepaint">
+            <van-collapse-item v-for="suidaoitem,index in suidao" :title="suidaoitem.name + '-共' + suidao[index].page.total + '条记录'" :name="suidaoitem.code" v-if="isrepaint">
                 <van-list v-if="true" style="margin-top: 2px;">
                     <van-cell v-for="item in suidaoitem.recordlist.dataList" :key="item.timestamp" @click="$router.push(`shoudong_record_list_items_list?timestamp=${item.timestamp}`)">
                         <!-- {{item}} -->

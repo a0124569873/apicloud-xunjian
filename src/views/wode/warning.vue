@@ -5,7 +5,7 @@
         </van-nav-bar>
 
         <van-collapse v-model="colactive">
-            <van-collapse-item v-for="item in list" :title="item.name + '-' + tolocal(item.timestamp)" :name="item.name" style="text-align: center;">
+            <van-collapse-item v-for="item in list" :title="item.name + '-' + tolocal(item.timestamp)" :name="item.timestamp" style="text-align: center;">
                 {{item.msg[0]}}<br/>
                 {{item.msg[1]}}
             </van-collapse-item>

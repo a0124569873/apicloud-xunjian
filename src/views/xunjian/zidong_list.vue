@@ -4,7 +4,11 @@
             <van-icon name="arrow-left" slot="left" size="30px"/>
         </van-nav-bar>
 
-        <van-list v-if="true" style="margin-top: 2px;">
+        <van-list
+            v-if="true"
+            style="margin-top: 2px;"
+            
+            >
             <van-cell v-for="item in guzhanglist" :key="item.code" @click="clickdetail(item)">
                 <deviceitem />
             </van-cell>
