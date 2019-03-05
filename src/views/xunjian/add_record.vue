@@ -186,7 +186,8 @@ export default {
 
                 let dst_str = JSON.stringify(xjr_json)
                 localStorage.setItem('xunjianrecord', dst_str)
-                this.$toast("提交成功")
+                // this.$toast("提交成功")
+                this.$dialog.alert({message: "提交成功"})
 
             }else{
                 this.$toast("请输入问题描述")

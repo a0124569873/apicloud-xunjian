@@ -1,26 +1,31 @@
 <template>
     <div style="margin: 3px">
         <van-row>
-            <van-col span="6">
+            <!-- <van-col span="6">
                 <div style="margin: 10px auto;text-align: center;">
                     <img :src="imgpath" alt="" >
                 </div>
-            </van-col>
-            <van-col span="18">
+            </van-col> -->
+            <van-col span="24" style="margin: 10px auto;text-align: center;">
                 <van-row>
-                    <van-col span="8">隧道风机--{{item.code}}</van-col>
-                    <van-col span="8">&nbsp;</van-col>
-                    <van-col span="8">1天前</van-col>
+                    <van-col span="8">隧道名称：</van-col>
+                    <!-- <van-col span="8">&nbsp;</van-col> -->
+                    <van-col span="16">{{item.sectionName}}</van-col>
                 </van-row>
                 <van-row>
-                    <van-col span="8">西黄隧道</van-col>
-                    <van-col span="8">西坪-寺湾</van-col>
-                    <van-col span="8">K20+45</van-col>
+                    <van-col span="8">设备名称</van-col>
+                    <!-- <van-col span="8">&nbsp;</van-col> -->
+                    <van-col span="16">{{item.name}}</van-col>
                 </van-row>
-                <van-row>
-                    <van-col span="8">故障现象：图像偏色</van-col>
-                    <van-col span="8">&nbsp;</van-col>
-                    <van-col span="8">已上报</van-col>
+                <van-row v-if="type == 'undeal'">
+                    <van-col span="8">故障现象：</van-col>
+                    <!-- <van-col span="8">&nbsp;</van-col> -->
+                    <van-col span="16">{{item.errMsg}}</van-col>
+                </van-row>
+                <van-row v-if="type == 'deal'">
+                    <van-col span="8">创建时间：</van-col>
+                    <!-- <van-col span="8">&nbsp;</van-col> -->
+                    <van-col span="16">{{item.createTime}}</van-col>
                 </van-row>
             </van-col>
             
@@ -30,7 +35,11 @@
 
 <script>
 export default {
-    props: ['item', 'cur'],
+    props: [
+        'item',
+        'cur',
+        'type'
+    ],
 
     data(){
         return {
@@ -42,7 +51,7 @@ export default {
         // console.log(this.item);
         // console.log(this.$parent);
 
-        this.imgpath = "static/mapIcon/" + this.item.imgpath + "--1.png"
+        // this.imgpath = "static/mapIcon/" + this.item.imgpath + "--1.png"
         
     },
 }

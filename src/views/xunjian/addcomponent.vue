@@ -54,7 +54,7 @@
 
 import axios from 'axios'
 import 'es6-promise-always'
-import * as config from '../config'
+import config from '../config'
 
 
 export default {
@@ -108,12 +108,12 @@ export default {
                 formdata.append('fileName', this.files[item].finimgurl);
                 formdata.append('fileLength', this.files[item].file.file.size);
                 
-                let config = {
+                // let config = {
                     // headers:{'Content-Type':'multipart/form-data'}
-                };
+                // };
                 // config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 
-                axios.create().post(_this.domainconfig, formdata, config).then(res => {
+                axios.create().post(_this.domainconfig, formdata).then(res => {
                     
                     if (res.data.code == 200){
                         _this.$toast("上传" + _this.files[item].finimgurl + "成功")

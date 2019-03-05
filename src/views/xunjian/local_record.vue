@@ -36,7 +36,7 @@
 
 import xunjianService from '../../services/xunjianService'
 import axios from 'axios'
-import * as config from '../config'
+import config from '../config'
 
 export default {
 
@@ -45,6 +45,7 @@ export default {
             list: [],
             tunnellist: {},
             domainconfig : '',
+            msg: ''
         }
     },
 
@@ -107,7 +108,8 @@ export default {
                     }
                     xunjianService.addXunjianRecordItemItem(params).then(res => {
                         if(res == true){
-                            this.$toast(`上传记录${xjr_json[item][eachsuidao_item_key].devicename}结束`)
+                            _this.msg += `上传记录${xjr_json[item][eachsuidao_item_key].devicename}结束<br/>`
+                            // _this.$toast(`上传记录${xjr_json[item][eachsuidao_item_key].devicename}结束`)
                         }
                     })
 
@@ -118,19 +120,24 @@ export default {
                         formdata.append('fileName', xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']);
                         formdata.append('fileLength', xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-size']);
                         
-                        let config = {
+                        // let config = {
                             // headers:{'Content-Type':'multipart/form-data'}
-                        };
+                        // };
 
-                        axios.create().post(_this.domainconfig, formdata, config).then(res => {
+                        axios.create().post(_this.domainconfig, formdata).then(res => {
                             
                             if (res.data.code == 200){
-                                _this.$toast("上传" + xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name'] + "成功")
+                                // _this.$toast(`上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}成功`)
+                                _this.msg += `上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}成功<br/>`
                             }else{
-                                _this.$toast("上传失败")
+                                // _this.$toast(`上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}失败`)
+                                _this.msg += `上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}失败<br/>`
                             }
                         }).catch((err) => {
-                            _this.$toast("上传失败" + err)
+                            // _this.$toast(`上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}失败${err}`)
+                            _this.msg += `上传图片${xjr_json[item][eachsuidao_item_key].imgs[imgitem_key]['file-name']}失败${err}<br/>`
+                            console.log(_this.msg);
+                            
                         }).always((err) =>  {
                             // console.log(err);
                             // _this.loading = false
@@ -153,7 +160,8 @@ export default {
                 }
                 
                 xunjianService.addXunjianRecordItem(params).then(res => {
-                    _this.$dialog.alert({message: `隧道[${_this.tunnellist[item].name}]记录上传成功`})
+                    _this.msg += `隧道[${_this.tunnellist[item].name}]记录上传成功<br/>`
+                    _this.$dialog.alert({message: _this.msg})
                     localStorage.setItem('xunjianrecord', '{}')
                     _this.list = []
                 }).catch(res => {

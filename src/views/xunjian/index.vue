@@ -50,7 +50,7 @@
                     </van-row>
                 </van-row>
             </div>
-            <van-nav-bar title="" class="xunjiantabbar">
+            <!-- <van-nav-bar title="" class="xunjiantabbar">
                 <div slot="left">自动巡检</div>
             </van-nav-bar>
             <div>
@@ -62,15 +62,11 @@
                         </div>
                     </van-col>
                     <van-col span="8" style="text-align: center;">
-                        <!-- <van-icon name="scan" size="50px"></van-icon><br/>
-                        扫一扫 -->
                     </van-col>
                     <van-col span="8" style="text-align: center;">
-                        <!-- <van-icon name="scan" size="50px"></van-icon><br/>
-                        扫一扫 -->
                     </van-col>
                 </van-row>
-            </div>
+            </div> -->
 
             <!-- <van-button @click="test" type="primary" style="margin-top: 50px;" size="large">
                 测试按钮
@@ -112,12 +108,31 @@ export default {
 
         test(){
             
-            let timestamp = new Date().getTime()
-            let newDate = new Date()
-            newDate.setTime(timestamp)
-            let res =  newDate.toLocaleString()
+            // let timestamp = new Date().getTime()
+            // let newDate = new Date()
+            // newDate.setTime(timestamp)
+            // let res =  newDate.toLocaleString()
 
-            console.log(res);
+            // console.log(res);
+
+// api.alert({
+//     title: 'testtitle',
+//     msg: 'testmsg',
+// }, function(ret, err) {
+
+// });
+
+// api.notification({
+//     sound:'default',
+//     notify: {
+//     title: '通知标题',
+//         content: '通知内容'
+//     }
+// });
+
+            let localconfig = localStorage.getItem("localconfig")
+
+            console.log(localconfig == null);
             
             
 
@@ -129,6 +144,12 @@ export default {
 
         openscan(){
             let _this = this
+
+            if ((typeof api) == 'undefined'){
+                let info = '{"categoryCode":"COVIJCQ","categoryName":"CO/VI检测器","code":"000001YRKCOVI","name":"右洞入口段CO/VI检测器","sectionCode":"CU1X1Q5","sectionName":"实验室隧道一"}'
+                _this.$router.push(`add_record?info=${info}&type=saoma`)
+                return
+            }
 
             var FNScanner = api.require('FNScanner');
             FNScanner.open({

@@ -9,46 +9,30 @@ class xunjianService {
         })
     }
 
-    getTunnel () {
-        return request({
-            url: '',
-            method: 'get'
-        })
-    }
 
-    getXunjianList(){
+    /**
+     * 
+     * @param {*} params 
+     * params.current   1
+     * params.size  5
+     */
+    getDeal (params) {
         return request({
-            url: '',
-            method: 'get'
-        })
-    }
-
-    getXunjianItems(){
-        return request({
-            url: '',
-            method: 'get'
-        })
-    }
-
-    getXunjianItemsItem(){
-        return request({
-            url: '',
-            method: 'get'
-        })
-    }
-
-    addXunjianRecordItem(params){
-        return request({
-            url: '/equDetect/addSingleInspectRecord',
+            url: 'alarm/equipmentFaultSoluted/faultSolutedPage',
             method: 'post',
-            params: params
+            params:params
         })
     }
 
-    getAll(){
+    /**
+     * 
+     * @param {*} params 
+     */
+    getUnDeal(params){
         return request({
-            url: '',
-            method: 'get'
+            url: 'alarm/equipmentFault/allFaultInfo',
+            method: 'get',
+            params:params
         })
     }
 

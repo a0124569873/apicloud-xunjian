@@ -6,7 +6,7 @@
 
 <script>
 
-import * as config from '../config'
+import config from '../config'
 import errcode from './errcode'
 
 export default {
@@ -55,8 +55,8 @@ export default {
 	//   if(){
 		if(received_msg != "连接成功" && received_msg != "error") {
 			let data = JSON.parse(received_msg)
-			// console.log(data);
 			if(data.directive == "deviceAlarm"){
+				// console.log(JSON.stringify(data));
 				if(data.data.errMsg == undefined) {
 					data.data.errMsg = "故障已恢复";
 				}
@@ -70,13 +70,23 @@ export default {
 				}
 
 				if ((typeof api) != 'undefined'){
-					api.notification();
+
+					api.notification({
+						sound:'default',
+						notify: {
+							title: '故障告警',
+							content: errorMessage
+						}
+					});
+
+					// api.notification();
+
 				}
 				
 
-				this.$dialog.alert({
-					message: errorMessage
-				})
+				// this.$dialog.alert({
+				// 	message: errorMessage
+				// })
 
 				let warn = localStorage.getItem("warnrecord")
 

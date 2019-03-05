@@ -84,7 +84,7 @@
 
 <script>
 
-import * as config from '../config'
+import config from '../config'
 import xunjianService from '../../services/xunjianService'
 import { ImagePreview } from 'vant';
 
