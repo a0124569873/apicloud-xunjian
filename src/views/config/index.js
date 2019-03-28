@@ -4,11 +4,11 @@ let apibaseurl = "http://47.105.40.29:18880/hjzk/"
 let wsbaseurl = "ws://47.105.40.29:18888/"
 
 let config = {
-    imguploaddomain : "http://10.168.5.241:8888/gateway/uploadBaseFile",
+    imguploaddomain : "http://10.168.5.241:8888/gateway/uploadBaseFile", //图片上传地址
     imgdomain : "http://images.ccgthi.com/",
-    apibaseurl : "http://47.105.40.29:18880/hjzk/",
-    wsbaseurl : "ws://47.105.40.29:18888/",
-    hjcloudapiurl: 'http://10.168.5.210:8888/alarm/'
+    apibaseurl : "http://10.168.5.210:8880/hjzk/",  //app后台地址
+    wsbaseurl : "ws://10.168.5.210:8888/websocket/1",  //websock后台地址
+    hjcloudapiurl: 'http://10.168.5.210:8888/alarm/' //hjcloud 后台地址
 }
 
 // let localconfig = localStorage.getItem("localconfig")

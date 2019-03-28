@@ -29,7 +29,7 @@ export default {
   methods: {
 	initWebSocket() {
 	  //初始化weosocket
-	  const wsuri = this.wsbaseurl + "websocket/1"; //ws地址
+	  const wsuri = this.wsbaseurl; //ws地址
 
 	  this.websock = new WebSocket(wsuri);
 	  this.websock.onopen = this.websocketonopen;

@@ -127,7 +127,7 @@ export default {
                 this.undealfinished = true
             }else{
                 this.dealcurrent++
-                this.$http.post(`http://10.168.5.210:8602/alarm/equipmentFaultSoluted/faultSolutedPage?current=${this.dealcurrent}&size=${this.dealsize}`).then(res => {
+                this.$http.post(`http://10.168.5.210:8888/alarm/equipmentFaultSoluted/faultSolutedPage?current=${this.dealcurrent}&size=${this.dealsize}`).then(res => {
                      res.data.records.map(item =>{
                          this.dealList.push(item)
                      })
@@ -145,14 +145,7 @@ export default {
         },
 
         test(){
-            this.$http.get("http://10.168.5.210:8888/alarm/equipmentFault/allFaultInfo").then(res => {
-                console.log(res);
-                
-            })
-            // /equipmentFaultSoluted/faultSolutedPage
-            this.$http.post("http://10.168.5.210:8888/alarm/equipmentFaultSoluted/faultSolutedPage?current=1&size=50").then(res => {
-                console.log(res); 
-            })
+
         },
 
         getUndeal(){
@@ -166,7 +159,7 @@ export default {
         },
 
         getDeal(){
-            this.$http.post("http://10.168.5.210:8602/alarm/equipmentFaultSoluted/faultSolutedPage?current=1&size=5").then(res => {
+            this.$http.post("http://10.168.5.210:8888/alarm/equipmentFaultSoluted/faultSolutedPage?current=1&size=5").then(res => {
                 this.dealList = res.data.records
                 this.dealcount = res.data.total
             }).catch(res => {
